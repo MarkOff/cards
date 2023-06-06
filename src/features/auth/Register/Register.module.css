@@ -1,0 +1,80 @@
+.register {
+    display: flex;
+    background-color: #FFFFFF;
+    align-items: center;
+    width: 600px;
+    height: 800px;
+    margin: 0 auto;
+    margin-top: 80px;
+    flex-direction: column;
+    border: 2px solid darkgrey;
+    justify-content: center;
+    gap: 30px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+}
+
+.register input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.register .mailContainer {
+    border: none;
+    width: 350px;
+    border-bottom: 1px solid grey;
+}
+
+.register .inputType {
+    font-size: 16px;
+    font-weight: 500;
+
+    height: 25px;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    outline: none;
+}
+
+.register .inputCheckboxContainer {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.register .passwordContainer {
+    border: none;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+}
+
+.buttonPassword {
+    background: none;
+    border: none;
+}
+
+.register .buttonSingUp {
+    font-size: 16px;
+    color: whitesmoke;
+    border: none;
+    background-color: #366EFF;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 347px;
+    height: 36px;
+
+}
+.register .buttonSingUp:active {
+    background-color: #5883f8;
+}
+
+
+.register .dontHaveAccount {
+    font-weight: 600;
+    font-size: 14px;
+    color: grey;
+}
+
+.register .signUp {
+    color: #366EFF;
+}
