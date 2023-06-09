@@ -1,7 +1,7 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "features/auth/auth.slice";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "common/hooks";
 
 export const Logout = () => {
   const dispatch = useAppDispatch();
@@ -14,9 +14,9 @@ export const Logout = () => {
     }
   );
 
-  if (!isLoggedIn) {
-    return <Navigate to={'/login'}/>
-  }
+  // if (!isLoggedIn) {
+  //   return <Navigate to={'/login'}/>
+  // }
 
   return (
     <div>

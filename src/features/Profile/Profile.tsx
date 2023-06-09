@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useForm } from "react-hook-form";
 import { authThunks } from "features/auth/auth.slice";
 import s from "./Profile.module.css";
 import ava from "common/icons/profileAvatar.jpg";
 import change from "common/icons/Edit.svg";
 import { Logout } from "features/auth/Logout/Logout";
-import { buttonClasses } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "common/hooks";
 
 export const Profile = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +25,7 @@ export const Profile = () => {
   const changeName = () => {
     setInputName(!inputName);
   };
-console.log(name)
+
   const onSubmit = handleSubmit((data: any) => {
     dispatch(authThunks.changeProfile(data)).unwrap()
       .then(() => {
@@ -49,8 +48,7 @@ console.log(name)
               <button onClick={onSubmit}>Save</button>
             </div>
             : <div>
-              {name}
-              <img onClick={changeName} src={change} alt="change profile icon" />
+              {name} <img onClick={changeName} src={change} alt="change profile icon" />
             </div>
           }
 

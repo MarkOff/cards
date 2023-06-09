@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useAppDispatch } from "app/hooks";
 import { authThunks } from "features/auth/auth.slice";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import s from "./Register.module.css";
 import noEye from "./../../../common/icons/eyeNone.svg";
 import Eye from "./../../../common/icons/eyeMain.svg";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 
 
 export const Register = () => {
@@ -23,7 +23,7 @@ export const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit = handleSubmit((data) => dispatch(authThunks.register(data)).unwrap().then(() => {
-      navigate("/");
+      navigate("/login");
     }
   ));
 

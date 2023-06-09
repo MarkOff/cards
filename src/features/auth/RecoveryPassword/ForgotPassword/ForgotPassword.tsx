@@ -1,10 +1,10 @@
 import React from "react";
 import s from "./ForgotPassword.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "app/hooks";
 import { useForm } from "react-hook-form";
 import { authThunks } from "features/auth/auth.slice";
 import { ArgForgotType } from "features/auth/auth.api";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 
 export const ForgotPassword = () => {
 

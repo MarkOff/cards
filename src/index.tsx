@@ -5,8 +5,8 @@ import { store } from "app/store";
 import App from "app/App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { RouterProvider } from "react-router-dom";
-import { router } from "app/Routing/Routing";
+import "react-toastify/dist/ReactToastify.css";
+import { GlobalError } from "common/globalError";
 
 
 const container = document.getElementById("root")!;
@@ -15,7 +15,7 @@ const root = createRoot(container);
 root.render(
   <Provider store={store}>
       <App />
-    <RouterProvider router={router} />
+    <GlobalError/>
   </Provider>
 );
 

@@ -1,8 +1,8 @@
-import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
-import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { authApi } from "features/auth/auth.api";
-import { isAxiosError } from "axios";
-import { authThunks, setProfile } from "features/auth/auth.slice";
+import { setProfile } from "features/auth/auth.slice";
+import { createAppAsyncThunk, thunkTryCatch } from "common/utils";
+import { AxiosError, isAxiosError } from "axios";
 
 
 const appInitialState = {
@@ -15,12 +15,20 @@ const appInitialState = {
 
 export const isInitializeApp = createAppAsyncThunk
 ("auth/isInitialize", async (_, thunkAPI) => {
-  const { dispatch } = thunkAPI;
-  const res = await authApi.me();
-  if (res.data) {
-    dispatch(setProfile(res.data));
-    return res.data;
-  }
+  return thunkTryCatch(thunkAPI, async () => {
+    const res = await authApi.me();
+    if (res.data) {
+      thunkAPI.dispatch(setProfile(res.data));
+      return res.data;
+    }
+  });
+
+  // const { dispatch } = thunkAPI;
+  // const res = await authApi.me();
+  // if (res.data) {
+  //   dispatch(setProfile(res.data));
+  //   return res.data;
+  // }
 });
 
 type InitialStateType = typeof appInitialState
@@ -31,27 +39,49 @@ const slice = createSlice({
   reducers: {
     setIsLoading: (state, action: PayloadAction<{ isLoading: boolean }>) => {
       state.isLoading = action.payload.isLoading;
+    },
+    setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
+      state.error = action.payload.error;
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(appThunks.isInitializeApp.fulfilled, (state, action) => {
-      state.isInitialize = true;
-      state.isLoading = false;
-    });
-    builder.addCase(appThunks.isInitializeApp.rejected, (state, action) => {
-      state.isInitialize = true;
-      state.isLoading = false;
-    });
-    // builder.addCase(authThunks.register.rejected, (state, action) => {
-    //   if (!isAxiosError(action.payload)) {
-    //     state.error = "an error";
-    //
-    //     return;
-    //   }
-    // });
+    builder
+      .addCase(appThunks.isInitializeApp.fulfilled, (state, action) => {
+        state.isInitialize = true;
+      })
+      .addCase(appThunks.isInitializeApp.rejected, (state, action) => {
+        state.isInitialize = true;
+      })
+      .addMatcher(
+        (action) => action.type.endsWith("/pending"),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("/rejected"),
+        (state, action) => {
+            state.isLoading = false;
+          if (action.type !== "auth/isInitialize/rejected") {
+            if (!action.payload.showGlobalError) return;
+            const err = action.payload.e as Error | AxiosError<{ error: string }>;
+            if (isAxiosError(err)) {
+              state.error = err.response ? err.response.data.error : err.message;
+            } else {
+              state.error = `Native error ${err.message}`;
+            }
+          }
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("/fulfilled"),
+        (state) => {
+          state.isLoading = false;
+        }
+      );
   }
 });
 
 export const appReducer = slice.reducer;
-// export const appActions = slice.actions;
+export const appActions = slice.actions;
 export const appThunks = { isInitializeApp };

@@ -1,4 +1,3 @@
-import { useAppSelector } from "app/hooks";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { Layout } from "layout/Layout";
 import { Login } from "features/auth/Login/Login";
@@ -6,9 +5,10 @@ import { Register } from "features/auth/Register/Register";
 import { CheckEmail } from "features/auth/RecoveryPassword/CheckEmail/CheckEmail";
 import { CreateNewPassword } from "features/auth/RecoveryPassword/CreateNewPassword/CreateNewPassword";
 import { ForgotPassword } from "features/auth/RecoveryPassword/ForgotPassword/ForgotPassword";
-import { Logout } from "features/auth/Logout/Logout";
 import React from "react";
 import { Profile } from "features/Profile/Profile";
+import { useAppSelector } from "common/hooks";
+import { Packs } from "features/packs/Packs";
 
 const PrivateRoutes = () => {
   const isLogin = useAppSelector(state => state.auth.isLogin)
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/packs",
-        element: <h1>Packs</h1>
+        element: <Packs/>
       },
       {
         element: <PrivateRoutes />,

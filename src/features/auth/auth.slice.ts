@@ -8,9 +8,8 @@ import {
   authApi,
   ProfileType
 } from "features/auth/auth.api";
-import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk";
 import { appThunks } from "app/app.slice";
-import { isAxiosError } from "axios";
+import { createAppAsyncThunk, thunkTryCatch } from "common/utils";
 
 
 const slice = createSlice({
@@ -21,6 +20,7 @@ const slice = createSlice({
       email: ""
     } as ProfileType,
     isLogin: false,
+    successMessage: "",
     error: null as null | string
   },
   reducers: {
@@ -32,13 +32,8 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
       state.profile = action.payload.profile;
+      state.successMessage = "Вы успешно залогинились!";
       state.isLogin = true;
-    });
-    builder.addCase(register.rejected, (state, action) => {
-      if (!isAxiosError(action.payload)) {
-        state.error = "an error";
-        return;
-      }
     });
     builder.addCase(logout.fulfilled, (state, action) => {
       state.isLogin = false;
@@ -52,43 +47,51 @@ const slice = createSlice({
   }
 });
 
+
 const register = createAppAsyncThunk<void, ArgRegisterType>
-("auth/register", async (arg, thunkAPI) => {
-  const { rejectWithValue } = thunkAPI;
-  try {
-    const res = await authApi.register(arg);
-    console.log(res);
-  } catch (e) {
-    console.log('Register error');
-    // return rejectWithValue(e);
-  }
+("auth/register", async (arg: ArgRegisterType, thunkAPI) => {
+  return thunkTryCatch(thunkAPI, async () => {
+    await authApi.register(arg);
+  });
 });
 
 const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLoginType>
-("auth/login", async (arg) => {
-  const res = await authApi.login(arg);
-  return { profile: res.data };
+("auth/login", async (arg, thunkAPI) => {
+  return thunkTryCatch(thunkAPI, async () => {
+      const res = await authApi.login(arg);
+      return { profile: res.data };
+    },
+    true
+  );
 });
 
 const logout = createAppAsyncThunk
-("auth/logout", async () => {
-  await authApi.logout();
+("auth/logout", async (_, thunkAPI) => {
+  return thunkTryCatch(thunkAPI, async () => {
+    await authApi.logout();
+  });
 });
 
 const forgotPassword = createAppAsyncThunk
 ("auth/forgot-password", async (arg: ArgForgotType, thunkAPI) => {
-  await authApi.forgot(arg);
+  return thunkTryCatch(thunkAPI, async () => {
+    await authApi.forgot(arg);
+  });
 });
 
 const setNewPassword = createAppAsyncThunk
-("auth/set-new-password", async (arg: ArgSetNewPasswordType) => {
-  await authApi.setNewPassword(arg);
+("auth/set-new-password", async (arg: ArgSetNewPasswordType, thunkAPI) => {
+  return thunkTryCatch(thunkAPI, async () => {
+    await authApi.setNewPassword(arg);
+  });
 });
 
 const changeProfile = createAppAsyncThunk
-("auth/change-profile", async (arg: ArgChangeProfile) => {
-  const res = await authApi.changeProfile(arg);
-  return res.data.updatedUser;
+("auth/change-profile", async (arg: ArgChangeProfile, thunkAPI) => {
+  return thunkTryCatch(thunkAPI, async () => {
+    const res = await authApi.changeProfile(arg);
+    return res.data.updatedUser;
+  });
 });
 
 export const { setProfile } = slice.actions;

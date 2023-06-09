@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "app/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authThunks } from "features/auth/auth.slice";
 import s from './CreateNewPassword.module.css'
 import noEye from "common/icons/eyeNone.svg";
 import Eye from "common/icons/eyeMain.svg";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 
 export const CreateNewPassword = () => {
   const dispatch = useAppDispatch();
