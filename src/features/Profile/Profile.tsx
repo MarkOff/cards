@@ -9,7 +9,9 @@ import { useAppDispatch, useAppSelector } from "common/hooks";
 
 export const Profile = () => {
   const dispatch = useAppDispatch();
-  const { name, email } = useAppSelector((state) => state.auth.profile);
+  const email  = useAppSelector((state) => state.auth.profile.email);
+  const  name = useAppSelector((state) => state.auth.profile.name);
+
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     defaultValues: {
       name: name

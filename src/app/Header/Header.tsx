@@ -7,7 +7,7 @@ import { useAppSelector } from "common/hooks";
 export const Header = () => {
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector((state) => state.auth.isLogin);
-  const { name } = useAppSelector((state) => state.auth.profile);
+  const  name  = useAppSelector((state) => state.auth.profile.name);
 
   const handleSignIn = () => {
     navigate("/login");

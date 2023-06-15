@@ -17,7 +17,8 @@ const slice = createSlice({
   initialState: {
     profile: {
       name: "",
-      email: ""
+      email: "",
+      _id: ''
     } as ProfileType,
     isLogin: false,
     successMessage: "",

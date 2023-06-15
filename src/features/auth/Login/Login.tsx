@@ -30,12 +30,14 @@ export const Login = () => {
   // const onSubmit = handleSubmit((data) => dispatch(authThunks.login(data)).unwrap().then(() => {
   //   navigate("/profile");
   // }));
+
+
   const onSubmit = handleSubmit((data) => {
     dispatch(authThunks.login(data))
       .unwrap()
       .then((res) => {
         toast.success("Вы успешно залогинились");
-        navigate("/profile");
+        navigate("/packs");
       })
       .catch((err) => {
         toast.error(err.e.responce.data.error)

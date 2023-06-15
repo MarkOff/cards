@@ -11,15 +11,15 @@ import { useAppSelector } from "common/hooks";
 import { Packs } from "features/packs/Packs";
 
 const PrivateRoutes = () => {
-  const isLogin = useAppSelector(state => state.auth.isLogin)
+  const isLogin = useAppSelector(state => state.auth.isLogin);
 
-  return isLogin ? <Outlet/> : <Navigate to={'/login'} />
-}
+  return isLogin ? <Outlet /> : <Navigate to={"/login"} />;
+};
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
         path: "/login",
@@ -54,18 +54,18 @@ export const router = createBrowserRouter([
         element: <Register />
       },
       {
-        path: "/packs",
-        element: <Packs/>
-      },
-      {
         element: <PrivateRoutes />,
         children: [
           {
             path: "/profile",
-            element: <Profile/>
+            element: <Profile />
           },
+          {
+            path: "/packs",
+            element: <Packs />
+          }
         ]
       }
     ]
-  },
+  }
 ]);

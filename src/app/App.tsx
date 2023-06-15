@@ -23,14 +23,15 @@ function App() {
     );
   }
 
-  if (isLoading) {
-    return <div className="App">
-      {isLoading && <LinearProgress />}
-    </div>;
-  }
+  // if (isLoading) {
+  //   return <div className="App">
+  //     {isLoading && <LinearProgress />}
+  //   </div>;
+  // }
 
   return (
     <div className="App">
+      {isLoading && <LinearProgress />}
       <RouterProvider router={router} />
     </div>
   );
