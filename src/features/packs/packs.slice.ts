@@ -22,7 +22,6 @@ const slice = createSlice({
       user_id: "",
       sortPacks: "0updated"
     } as SearchParamsType,
-    successMessage: ""
   },
   reducers: {
     setMinValue: (state, action: PayloadAction<{ min: number }>) => {

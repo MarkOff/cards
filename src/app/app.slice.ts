@@ -22,16 +22,9 @@ export const isInitializeApp = createAppAsyncThunk
       return res.data;
     }
   });
-
-  // const { dispatch } = thunkAPI;
-  // const res = await authApi.me();
-  // if (res.data) {
-  //   dispatch(setProfile(res.data));
-  //   return res.data;
-  // }
 });
 
-type InitialStateType = typeof appInitialState
+export type InitialAppStateType = typeof appInitialState
 
 const slice = createSlice({
   name: "app",

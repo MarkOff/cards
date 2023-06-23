@@ -3,17 +3,18 @@ import { appThunks } from "app/app.slice";
 import { CircularProgress, LinearProgress } from "@mui/material";
 import { RouterProvider } from "react-router-dom";
 import { router } from "app/Routing/Routing";
-import { useAppDispatch, useAppSelector } from "common/hooks";
 import { selectIsInitialize, selectIsLoading } from "app/app.selector";
+import { useActions } from "common/hooks/useActions.ts";
+import {useAppSelector } from "common/hooks";
 
 function App() {
   const isLoading = useAppSelector(selectIsLoading);
   const isInitialized = useAppSelector(selectIsInitialize);
-  const dispatch = useAppDispatch();
+  const { isInitializeApp } = useActions(appThunks);
 
   useEffect(() => {
-    dispatch(appThunks.isInitializeApp());
-  }, [dispatch]);
+    isInitializeApp();
+  }, []);
 
 
   if (!isInitialized) {

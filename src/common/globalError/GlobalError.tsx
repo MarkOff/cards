@@ -1,12 +1,13 @@
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
 import { appActions } from "app/app.slice";
-import { useAppDispatch, useAppSelector } from "common/hooks";
+import { useAppSelector } from "common/hooks";
 import { selectError } from "app/app.selector";
+import { useActions } from "common/hooks/useActions.ts";
 
 export const GlobalError = () => {
   const error = useAppSelector (selectError);
-  const dispatch = useAppDispatch();
+  const {setAppError} = useActions(appActions)
 
   if (error !== null) {
     toast.error(error);
@@ -15,10 +16,10 @@ export const GlobalError = () => {
   useEffect(() => {
     if (error !== null) {
       setTimeout(() => {
-        dispatch(appActions.setAppError({ error: null }));
+        setAppError({ error: null });
       }, 1000);
     }
-  }, [dispatch ,error]);
+  }, [error]);
 
   return (
     <ToastContainer

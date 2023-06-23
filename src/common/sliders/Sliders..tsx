@@ -1,13 +1,12 @@
 import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { Slider } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "common/hooks";
+import { useAppSelector } from "common/hooks";
 import { packActions } from "features/packs/packs.slice";
 import s from "./Slider.module.css";
 import { selectMax, selectMin } from "features/packs/packs.selector";
 import { useActions } from "common/hooks/useActions.ts";
 
 export const Sliders = () => {
-  const dispatch = useAppDispatch();
   const { setMinValue, setMaxValue } = useActions(packActions);
   const minValue = useAppSelector(selectMin);
   const maxValue = useAppSelector(selectMax);
@@ -47,10 +46,10 @@ export const Sliders = () => {
           onChange={onChangeSlider}
           onChangeCommitted={(event, value) => {
             if (Array.isArray(value)) {
-              dispatch(setMinValue({ min: value[0] }));
-              dispatch(setMaxValue({ max: value[1] }));
+              setMinValue({ min: value[0] });
+              setMaxValue({ max: value[1] });
             } else {
-              dispatch(setMinValue({ min: value }));
+              setMinValue({ min: value });
             }
           }
           }
