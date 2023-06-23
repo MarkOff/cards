@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { authApi } from "features/auth/auth.api";
-import { setProfile } from "features/auth/auth.slice";
+import { authActions } from "features/auth/auth.slice";
 import { createAppAsyncThunk, thunkTryCatch } from "common/utils";
 import { AxiosError, isAxiosError } from "axios";
 
 
 const appInitialState = {
   error: null as string | null,
-  isLoading: true,
+  isLoading: false,
   isAppInitialized: false,
   users: [],
   isInitialize: false
@@ -18,7 +18,7 @@ export const isInitializeApp = createAppAsyncThunk
   return thunkTryCatch(thunkAPI, async () => {
     const res = await authApi.me();
     if (res.data) {
-      thunkAPI.dispatch(setProfile(res.data));
+      thunkAPI.dispatch(authActions.setProfile(res.data));
       return res.data;
     }
   });
@@ -46,10 +46,10 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(appThunks.isInitializeApp.fulfilled, (state, action) => {
+      .addCase(appThunks.isInitializeApp.fulfilled, (state) => {
         state.isInitialize = true;
       })
-      .addCase(appThunks.isInitializeApp.rejected, (state, action) => {
+      .addCase(appThunks.isInitializeApp.rejected, (state) => {
         state.isInitialize = true;
       })
       .addMatcher(

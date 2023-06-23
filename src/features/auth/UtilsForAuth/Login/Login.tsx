@@ -1,16 +1,15 @@
 import { authThunks } from "features/auth/auth.slice";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import s from "./Login.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import s from "features/auth/UtilsForAuth/Login/Login.module.css";
 import React, { useState } from "react";
-import eye from "./../../../common/icons/eyeMain.svg";
-import noEye from "./../../../common/icons/eyeNone.svg";
-import { useAppDispatch, useAppSelector } from "common/hooks";
+import eye from "common/icons/eyeMain.svg";
+import noEye from "common/icons/eyeNone.svg";
 import { toast } from "react-toastify";
+import { useActions } from "common/hooks/useActions.ts";
 
 export const Login = () => {
-  const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector((state) => state.auth.isLogin);
+  const { login } = useActions(authThunks);
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -21,33 +20,24 @@ export const Login = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-
-  // const onSubmit = handleSubmit((data) => dispatch(authThunks.login(data)).unwrap().then(() => {
-  //   navigate("/profile");
-  // }));
-
-
   const onSubmit = handleSubmit((data) => {
-    dispatch(authThunks.login(data))
+    login(data)
       .unwrap()
-      .then((res) => {
+      .then(() => {
         toast.success("Вы успешно залогинились");
         navigate("/packs");
       })
       .catch((err) => {
-        toast.error(err.e.responce.data.error)
+        toast.error(err.e.responce.data.error);
       });
   });
 
-  if (isLoggedIn) {
-    return <Navigate to={"/profile"} />;
-  }
-
+  const emailInputError = errors.email && <>{errors.email.message}</>;
+  const passwordInputError = errors.password && <>{errors.password.message}</>;
 
   return (
     <>
@@ -58,7 +48,6 @@ export const Login = () => {
             required: "Email field is empty"
           })} />
         </div>
-        {/*{errors.email && <>{errors.email.message}</>}*/}
         <div className={s.passwordContainer}>
           <input className={s.inputType} placeholder={"Enter you password"}
                  type={showPassword ? "text" : "password"} {...register("password", { required: "Password field is empty" })} />
@@ -66,7 +55,7 @@ export const Login = () => {
             <img src={noEye} alt="" /> :
             <img src={eye} alt="" />}</button>
         </div>
-        {errors.email && <>{errors.email.message}</> || errors.password && <>{errors.password.message}</>}
+        {emailInputError || passwordInputError}
         <label className={s.inputCheckboxContainer}>
           <input className={s.inputCheckbox} type={"checkbox"} {...register("rememberMe")} /> Remember me
         </label>

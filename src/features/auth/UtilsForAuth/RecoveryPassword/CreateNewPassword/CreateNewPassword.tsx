@@ -2,25 +2,29 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authThunks } from "features/auth/auth.slice";
-import s from './CreateNewPassword.module.css'
+import s from 'features/auth/UtilsForAuth/RecoveryPassword/CreateNewPassword/CreateNewPassword.module.css'
 import noEye from "common/icons/eyeNone.svg";
 import Eye from "common/icons/eyeMain.svg";
-import { useAppDispatch } from "common/hooks/useAppDispatch";
+import { useActions } from "common/hooks/useActions.ts";
 
 export const CreateNewPassword = () => {
-  const dispatch = useAppDispatch();
+  const {setNewPassword} = useActions(authThunks);
   const navigate = useNavigate();
-  const { register, handleSubmit, watch ,formState: { errors } } = useForm<{password: string, confirmPassword: string}>({
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const {token} = useParams()
+  const { register, handleSubmit, watch ,formState: { errors } } = useForm<{password: string, confirmPassword: string}>
+  ({
     defaultValues: {
       password: "",
       confirmPassword: "",
     }
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const {token} = useParams()
-  const onSubmit = handleSubmit((data) => dispatch(authThunks.setNewPassword({password: data.password, resetPasswordToken: token!})).unwrap().then(() => {
+  const onSubmit = handleSubmit((data) =>
+    setNewPassword({password: data.password, resetPasswordToken: token!})
+    .unwrap()
+    .then(() => {
       navigate("/login");
     }
   ));
@@ -51,7 +55,7 @@ export const CreateNewPassword = () => {
           <input className={s.inputType} placeholder={"Confirm password"}
                  type={showConfirmPassword ? "text" : "password"} {...register("confirmPassword", {
             required: "This is required",
-            validate: value => value === password || "Passwords do notmatch"
+            validate: value => value === password || "Passwords do not match"
           })} />
           <button  className={s.buttonPassword} type="button" onClick={toggleConfirmPasswordVisibility}>
             {showConfirmPassword ? <img src={noEye} alt="hide password" /> : <img src={Eye} alt="show password" />}

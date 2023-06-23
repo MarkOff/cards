@@ -1,0 +1,25 @@
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.addButton {
+    margin-top: 15px;
+    font-size: 16px;
+    color: whitesmoke;
+    border: none;
+    background-color: #366EFF;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 175px;
+    height: 36px;
+
+}
+
+.addButton:active {
+    background-color: #5883f8;
+}

@@ -1,0 +1,15 @@
+.searchPacks {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.inputPacks {
+    width: 413px;
+    height: 36px;
+    border: 1px solid #D9D9D9;
+    padding-left: 18px;
+    background-image: url("/src/common/icons/search.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}

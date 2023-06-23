@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import s from "./CheckEmail.module.css";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import s from "features/auth/UtilsForAuth/RecoveryPassword/CheckEmail/CheckEmail.module.css";
 import emailIcon from "common/icons/loon-icon.svg";
 
 export const CheckEmail = () => {

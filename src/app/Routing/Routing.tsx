@@ -1,17 +1,18 @@
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { Layout } from "layout/Layout";
-import { Login } from "features/auth/Login/Login";
-import { Register } from "features/auth/Register/Register";
-import { CheckEmail } from "features/auth/RecoveryPassword/CheckEmail/CheckEmail";
-import { CreateNewPassword } from "features/auth/RecoveryPassword/CreateNewPassword/CreateNewPassword";
-import { ForgotPassword } from "features/auth/RecoveryPassword/ForgotPassword/ForgotPassword";
+import { Login } from "features/auth/UtilsForAuth/Login/Login";
+import { CheckEmail } from "features/auth/UtilsForAuth/RecoveryPassword/CheckEmail/CheckEmail";
+import { CreateNewPassword } from "features/auth/UtilsForAuth/RecoveryPassword/CreateNewPassword/CreateNewPassword";
+import { ForgotPassword } from "features/auth/UtilsForAuth/RecoveryPassword/ForgotPassword/ForgotPassword";
 import React from "react";
-import { Profile } from "features/Profile/Profile";
+import { Profile } from "features/profile/Profile";
 import { useAppSelector } from "common/hooks";
 import { Packs } from "features/packs/Packs";
+import { selectIsLogin } from "features/auth/auth.selector";
+import { Register } from "features/auth/UtilsForAuth/Register/Register";
 
 const PrivateRoutes = () => {
-  const isLogin = useAppSelector(state => state.auth.isLogin);
+  const isLogin = useAppSelector(selectIsLogin);
 
   return isLogin ? <Outlet /> : <Navigate to={"/login"} />;
 };

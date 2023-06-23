@@ -4,15 +4,19 @@ import { authThunks } from "features/auth/auth.slice";
 import s from "./Profile.module.css";
 import ava from "common/icons/profileAvatar.jpg";
 import change from "common/icons/Edit.svg";
-import { Logout } from "features/auth/Logout/Logout";
-import { useAppDispatch, useAppSelector } from "common/hooks";
+import { Logout } from "features/auth/UtilsForAuth/Logout/Logout";
+import { useAppSelector } from "common/hooks";
+import { selectEmail, selectName } from "features/auth/auth.selector";
+import { ArgChangeProfile } from "features/auth/auth.api";
+import { useActions } from "common/hooks/useActions.ts";
 
 export const Profile = () => {
-  const dispatch = useAppDispatch();
-  const email  = useAppSelector((state) => state.auth.profile.email);
-  const  name = useAppSelector((state) => state.auth.profile.name);
+  const { changeProfile } = useActions(authThunks);
+  const email = useAppSelector(selectEmail);
+  const name = useAppSelector(selectName);
+  const [inputName, setInputName] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       name: name
     }
@@ -22,16 +26,15 @@ export const Profile = () => {
     setValue("name", name);
   }, [name, setValue]);
 
-  const [inputName, setInputName] = useState(false);
 
   const changeName = () => {
     setInputName(!inputName);
   };
 
-  const onSubmit = handleSubmit((data: any) => {
-    dispatch(authThunks.changeProfile(data)).unwrap()
+  const onSubmit = handleSubmit((data: ArgChangeProfile) => {
+    changeProfile(data).unwrap()
       .then(() => {
-        setValue("name", data.name); // Обновляем значение поля формы
+        setValue("name", data.name);
         setInputName(false);
       });
   });

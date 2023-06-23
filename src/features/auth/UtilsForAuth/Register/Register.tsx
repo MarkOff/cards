@@ -3,14 +3,16 @@ import { authThunks } from "features/auth/auth.slice";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import s from "./Register.module.css";
-import noEye from "./../../../common/icons/eyeNone.svg";
-import Eye from "./../../../common/icons/eyeMain.svg";
-import { useAppDispatch } from "common/hooks/useAppDispatch";
+import noEye from "common/icons/eyeNone.svg";
+import Eye from "common/icons/eyeMain.svg";
+import { useActions } from "common/hooks/useActions.ts";
 
 
 export const Register = () => {
-  const dispatch = useAppDispatch();
+  const { setRegister } = useActions(authThunks);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
       email: "",
@@ -19,13 +21,13 @@ export const Register = () => {
     }
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const onSubmit = handleSubmit((data) => dispatch(authThunks.register(data)).unwrap().then(() => {
-      navigate("/login");
-    }
-  ));
+  const onSubmit = handleSubmit((data) => setRegister(data)
+    .unwrap()
+    .then(() => {
+        navigate("/login");
+      }
+    ));
 
   const password = watch("password");
 
@@ -43,30 +45,30 @@ export const Register = () => {
       <form onSubmit={onSubmit} className={s.register}>
         <h1>Sign Up</h1>
         <div className={s.mailContainer}>
-        <input className={s.inputType} placeholder={"Enter your email"} type={"email"} {...register("email", {
-          required: "This is required"
-        })} />
+          <input className={s.inputType} placeholder={"Enter your email"} type={"email"} {...register("email", {
+            required: "This is required"
+          })} />
         </div>
         <div className={s.passwordContainer}>
           <input className={s.inputType} placeholder={"Create password"}
                  type={showPassword ? "text" : "password"} {...register("password", { required: "This is required" })} />
           <button className={s.buttonPassword} type="button" onClick={togglePasswordVisibility}>
-            {showPassword ? <img src={noEye} alt="hide password" /> : <img src={Eye} alt="show password"/>}
+            {showPassword ? <img src={noEye} alt="hide password" /> : <img src={Eye} alt="show password" />}
           </button>
         </div>
         <div className={s.passwordContainer}>
           <input className={s.inputType} placeholder={"Confirm password"}
                  type={showConfirmPassword ? "text" : "password"} {...register("confirmPassword", {
             required: "This is required",
-            validate: value => value === password || "Passwords do notmatch"
+            validate: value => value === password || "Passwords do not match"
           })} />
-          <button  className={s.buttonPassword} type="button" onClick={toggleConfirmPasswordVisibility}>
+          <button className={s.buttonPassword} type="button" onClick={toggleConfirmPasswordVisibility}>
             {showConfirmPassword ? <img src={noEye} alt="hide password" /> : <img src={Eye} alt="show password" />}
           </button>
 
         </div>
         {errors.confirmPassword && <>{errors.confirmPassword.message}</>}
-        <button  className={s.buttonSingUp} type={"submit"} onClick={onSubmit}>Sign Up</button>
+        <button className={s.buttonSingUp} type={"submit"} onClick={onSubmit}>Sign Up</button>
         <div className={s.dontHaveAccount}>Already have an account?</div>
         <Link to={"/login"} className={s.signUp}>Sign In</Link>
       </form>

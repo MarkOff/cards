@@ -1,0 +1,9 @@
+.toolPagination {
+    display: flex;
+    flex-direction: row ;
+    gap: 15px;
+}
+
+.selectedCount {
+    width: 50px;
+}

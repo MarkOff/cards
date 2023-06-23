@@ -4,10 +4,11 @@ import { CircularProgress, LinearProgress } from "@mui/material";
 import { RouterProvider } from "react-router-dom";
 import { router } from "app/Routing/Routing";
 import { useAppDispatch, useAppSelector } from "common/hooks";
+import { selectIsInitialize, selectIsLoading } from "app/app.selector";
 
 function App() {
-  const isLoading = useAppSelector((state) => state.app.isLoading);
-  const isInitialized = useAppSelector((state) => state.app.isInitialize);
+  const isLoading = useAppSelector(selectIsLoading);
+  const isInitialized = useAppSelector(selectIsInitialize);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

@@ -1,0 +1,27 @@
+.showPacks {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.buttonShowPacks {
+    display: flex;
+    flex-direction: row;
+}
+
+.buttonShowPacks button {
+    width: 98px;
+    height: 36px;
+    border: 1px solid #D9D9D9;
+    /*background-color: #FFFFFF;*/
+    cursor: pointer;
+}
+
+.activeButton {
+    background-color: #366EFF;
+    color: #FFFFFF;
+}
+
+.defaultButton {
+    background-color: #FFFFFF;
+}

@@ -6,7 +6,6 @@
     gap: 15px;
 }
 
-
 .cardTool {
     display: flex;
     flex-direction: row;
@@ -15,108 +14,10 @@
     justify-content: space-between;
 }
 
-.header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
 
-.addButton {
-    margin-top: 15px;
-    font-size: 16px;
-    color: whitesmoke;
-    border: none;
-    background-color: #366EFF;
-    border-radius: 30px;
-    cursor: pointer;
-    width: 175px;
-    height: 36px;
 
-}
 
-.addButton:active {
-    background-color: #5883f8;
-}
 
-.searchPacks {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.inputPacks {
-    width: 413px;
-    height: 36px;
-    border: 1px solid #D9D9D9;
-    padding-left: 18px;
-    background-image: url("/src/common/icons/search.svg");
-    background-repeat: no-repeat;
-    background-position: left center;
-}
-
-.showPacks {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.buttonShowPacks {
-    display: flex;
-    flex-direction: row;
-}
-
-.buttonShowPacks button {
-    width: 98px;
-    height: 36px;
-    border: 1px solid #D9D9D9;
-    background-color: #FFFFFF;
-    cursor: pointer;
-}
-
-.filterCount {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.countPosition {
-    display: flex;
-    width: 300px;
-    gap: 15px;
-}
-
-.filterCount input {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-    font-weight: bold;
-    border: 1px solid #D9D9D9;
-    text-align: center;
-}
-
-.iconGroup {
-    display: flex;
-    gap: 10px;
-    justify-content: end;
-}
-
-.iconGroup img {
-    cursor: pointer;
-}
-
-.disableFilter {
-    display: flex;
-    margin-right: 10px;
-    margin-top: 25px;
-    width: 36px;
-    height: 36px;
-
-}
-
-.disableFilter img {
-    border: 1px solid #D9D9D9;
-}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -124,13 +25,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-.selectedCount {
-    width: 50px;
-}
 
-.toolPagination {
-    display: flex;
-    flex-direction: row ;
-    gap: 15px;
-}
+
+
 

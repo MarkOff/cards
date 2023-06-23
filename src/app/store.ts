@@ -2,7 +2,6 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { appReducer } from "app/app.slice";
 import { authReducer } from "features/auth/auth.slice";
 import { packReducer } from "features/packs/packs.slice";
-import { restoreState } from "localStorage/localStorage";
 
 export const store = configureStore({
   reducer: {

@@ -36,10 +36,10 @@ const slice = createSlice({
       state.successMessage = "Вы успешно залогинились!";
       state.isLogin = true;
     });
-    builder.addCase(logout.fulfilled, (state, action) => {
+    builder.addCase(logout.fulfilled, (state) => {
       state.isLogin = false;
     });
-    builder.addCase(appThunks.isInitializeApp.fulfilled, (state, action) => {
+    builder.addCase(appThunks.isInitializeApp.fulfilled, (state) => {
       state.isLogin = true;
     });
     builder.addCase(changeProfile.fulfilled, (state, action) => {
@@ -49,7 +49,7 @@ const slice = createSlice({
 });
 
 
-const register = createAppAsyncThunk<void, ArgRegisterType>
+const setRegister = createAppAsyncThunk<void, ArgRegisterType>
 ("auth/register", async (arg: ArgRegisterType, thunkAPI) => {
   return thunkTryCatch(thunkAPI, async () => {
     await authApi.register(arg);
@@ -95,6 +95,6 @@ const changeProfile = createAppAsyncThunk
   });
 });
 
-export const { setProfile } = slice.actions;
 export const authReducer = slice.reducer;
-export const authThunks = { register, login, logout, forgotPassword, setNewPassword, changeProfile };
+export const authActions = slice.actions;
+export const authThunks = { setRegister, login, logout, forgotPassword, setNewPassword, changeProfile };

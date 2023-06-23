@@ -1,0 +1,66 @@
+.iconGroup {
+    display: flex;
+    gap: 10px;
+    justify-content: start;
+}
+
+.sortUp {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.sortDown {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.sort {
+    display: flex;
+    max-width: 102px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.educationButton {
+    width: 15px;
+    height: 15px;
+    background-color: #FFFFFF;
+    border: none;
+    background-image: url("/src/common/icons/teacher.svg");
+    background-position:  center;
+    cursor: pointer;
+}
+
+.educationButton:active {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.deleteButton{
+    width: 15px;
+    height: 15px;
+    background-color: #FFFFFF;
+    border: none;
+    background-image: url("/src/common/icons/Delete.svg");
+    background-position:  center;
+    cursor: pointer;
+}
+
+.deleteButton:active {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.updateButton {
+    width: 15px;
+    height: 15px;
+    background-color: #FFFFFF;
+    border: none;
+    background-image: url("/src/common/icons/Edit.svg");
+    background-position:  center;
+    cursor: pointer;
+}
+
+.updateButton:active {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+}
